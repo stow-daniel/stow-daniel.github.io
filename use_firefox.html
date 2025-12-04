@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Recommendation</title>
+    <!-- Load Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind to use Inter font and friendly colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'firefox-blue': '#00549A',
+                        'firefox-orange': '#FF7139',
+                        'accent-yellow': '#FFCB3A',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Set Inter font explicitly -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+    </style>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4 font-sans">
+
+    <!-- Recommendation Card -->
+    <div class="w-full max-w-lg bg-white rounded-3xl shadow-2xl p-8 md:p-12 text-center border-t-4 border-firefox-orange transform transition duration-500 hover:shadow-xl hover:scale-[1.01] animate-fade-in">
+        
+        <!-- Firefox Icon (Using a simple SVG for aesthetics) -->
+        <svg class="w-20 h-20 mx-auto text-firefox-orange mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 01-4 4H8a4 4 0 01-4-4v-1a4 4 0 014-4h4a4 4 0 014 4v1z" />
+        </svg>
+
+        <h1 class="text-3xl md:text-4xl font-extrabold text-firefox-blue mb-4 leading-tight">
+            For the Best Experience...
+        </h1>
+
+        <p class="text-lg text-gray-700 mb-8">
+            We recommend viewing this content using <strong class="text-firefox-orange font-bold">Mozilla Firefox</strong>. 
+        </p>
+
+        <!-- Call to Action Button -->
+        <a href="https://www.mozilla.org/firefox/" target="_blank" class="inline-block px-8 py-3 text-lg font-semibold text-white bg-firefox-orange rounded-full shadow-lg hover:bg-firefox-blue transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-firefox-orange focus:ring-opacity-50">
+            Get Firefox Now
+        </a>
+
+        <!-- Small print/Current browser check -->
+        <p id="browser-info" class="mt-8 text-sm text-gray-500">
+            You appear to be using: <span id="current-browser" class="font-medium">Checking...</span>
+        </p>
+    </div>
+
+    <script>
+        // Simple function to detect the current browser name
+        function detectBrowser() {
+            const agent = navigator.userAgent.toLowerCase();
+            let browser = "Unknown Browser";
+
+            if (agent.includes('firefox')) {
+                browser = "Mozilla Firefox (Excellent choice!)";
+            } else if (agent.includes('chrome') && !agent.includes('edge')) {
+                browser = "Google Chrome";
+            } else if (agent.includes('safari') && !agent.includes('chrome')) {
+                browser = "Safari";
+            } else if (agent.includes('edge')) {
+                browser = "Microsoft Edge";
+            } else if (agent.includes('opera')) {
+                browser = "Opera";
+            }
+            
+            document.getElementById('current-browser').textContent = browser;
+            
+            // If the user is on Firefox, change the recommendation text slightly
+            if (browser.includes('Firefox')) {
+                document.querySelector('h1').textContent = "You're all set!";
+                document.querySelector('p:nth-of-type(1)').innerHTML = "You are already using <strong class='text-firefox-orange font-bold'>Mozilla Firefox</strong>. Thanks for choosing a browser focused on privacy and performance!";
+                document.querySelector('a').style.display = 'none'; // Hide the 'Get Firefox' button
+                document.querySelector('.border-firefox-orange').classList.add('border-green-500');
+                document.querySelector('.border-firefox-orange').classList.remove('border-firefox-orange');
+            }
+        }
+
+        // Add a simple CSS keyframe animation for a subtle fade-in effect on load
+        const style = document.createElement('style');
+        style.textContent = `
+            .animate-fade-in {
+                opacity: 0;
+                animation: fadeIn 0.8s ease-out forwards;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+
+
+        // Run the detection function when the window loads
+        window.onload = detectBrowser;
+    </script>
+</body>
+</html>
