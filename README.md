@@ -6,6 +6,9 @@ Personal GitHub Pages site.
 
 👉 https://stow-daniel.github.io
 
+## Checklist application 
+https://stow-daniel.github.io/checklist.html
+
 ## Purpose
 
 This repository hosts the source for my GitHub Pages site.  
